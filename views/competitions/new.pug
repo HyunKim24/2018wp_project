@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  .container
+    h1.main-title 공모전 등록하기
+    form(action="/competitions", method="POST", enctype="multipart/form-data")
+      include _form
+      button.btn.btn-outline-primary(type="submit") 공모전 업로드
+
+    

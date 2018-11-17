@@ -1,0 +1,27 @@
+.form-group
+  label(for="title") 공모전 이름
+  input.form-control(type="text", name="title", placeholder="공모전 이름", value=competition.title)
+.form-group
+  label(for="competition") 공모전 내용
+  textarea.form-control(name="content", rows="5")= competition.content
+.form-group
+  label(for="tags") 공모전 분야
+  input.form-control(type="text", name="tags", placeholder="스페이스바로 띄어가며 단어를 입력하세요", value=competition.tags ? competition.tags.join(" ") : "")
+.form-group
+  label(for='img') 공모전 요강 포스터
+  input.form-control(type="file", name="img")
+.form-group
+  label(for="sponsor") 공모전 주최 기관
+  input.form-control(type="text", name="sponsor", placeholder="공모전 주최기관", value=competition.sponsor)
+.form-group
+  label(for="who") 공모전 응시대상
+  input.form-control(type="text", name="who", placeholder="공모전 이름", value=competition.who)
+.form-group
+  label(for="date") 공모전 접수기간
+  input.form-control(type="text", name="date", placeholder="공모전 접수기간", value=competition.date)
+.form-group
+  label(for="master") 공모전 담당자
+  input.form-control(type="text", name="master", placeholder="공모전 담당자", value=competition.master)
+.form-group
+  label(for="call") 공모전 관련 문의
+  input.form-control(type="text", name="call", placeholder="공모전 관련 연락처", value=competition.call)

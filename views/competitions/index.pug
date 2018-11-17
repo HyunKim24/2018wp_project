@@ -1,0 +1,28 @@
+extends ../layout
+
+include ../includes/_paginate
+
+block content
+  .container
+    form.form-inline.search-input-group(action='/competitions', method='GET')
+      i.fa.fa-search
+      input.form-control.mr-sm-2(type='text', name='term', placeholder='Search', aria-label='Search', value=term)
+
+    h1.main-title 
+      | 공모전 리스트
+      if competitions.total > 0
+        .small 등록된 공모전의 갯수 : #{competitions.total}
+
+    if competitions.total <= 0 
+      .alert.alert-info 등록된 공모전이 없습니다.
+    else
+      .competitions
+        each competition in competitions.docs
+          .competition
+            a.title(href=`/competitions/${competition.id}`)= competition.title
+            include _competition
+
+      +paginate(competitions, '/competitions', query)
+
+    hr
+    a.btn.btn-primary(href='/competitions/new') 공모전 등록하기

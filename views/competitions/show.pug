@@ -1,0 +1,101 @@
+extends ../layout
+
+block content
+  .container
+    h1.main-title= competition.title
+
+    .competition.show
+      if competition.img
+        img.img-fluid(src= competition.img)
+      include _competition
+
+      .buttons
+        if currentUser
+          button.btn.btn-primary.competition-like-btn(data-id=competition.id) 
+            span.for-loading #[i.fa.fa-spin.fa-refresh] Loading
+            span #[i.fa.fa-thumbs-up] Like
+          if competition.author && competition.author.id == currentUser.id
+            | 
+            a.btn.btn-outline-secondary(href=`/competitions/${competition.id}/edit`) Edit
+            | 
+            a.btn.btn-outline-danger.need-confirm-btn(href=`/competitions/${competition.id}?_method=delete`) Delete
+      table.table.table
+        tr
+          td.h3 공모전 이름
+        tr 
+          td #{competition.title}
+        tr
+          td.h3 공모전 내용
+        tr
+          td #{competition.content}
+
+        tr
+          td.h3 공모전 주최 기관
+        tr
+          td #{competition.sponsor}
+        tr
+          td.h3 공모전 분야
+        tr
+          td #{competition.tags} 
+        tr
+          td.h3 공모전 응시 대상
+        tr
+          td #{competition.who} 
+        tr
+          td.h3 공모전 접수기간
+        tr
+          td #{competition.date}  
+      
+        tr
+          td.h3 공모전 담당자 연락처
+        tr
+          td #{competition.call}
+    
+    #map(style='width:80%; height:30em;')
+      script(type='text/javascript', src='//dapi.kakao.com/v2/maps/sdk.js?appkey=d7ead9b46c3aba08eacaca02fe5c37d4')
+      script(type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=APIKEY&libraries=services")
+      script.
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+          mapOption = {
+            center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 4 // 지도 확대, 축소 레벨
+          };
+        // 지도를 생성합니다    
+        var map = new daum.maps.Map(mapContainer, mapOption); 
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new daum.maps.services.Geocoder();
+        // 주소로 좌표를 검색합니다
+        geocoder.addressSearch('#{competition.sponsor}', function(result, status) {
+          // 정상적으로 검색이 완료됐으면 
+          if (status === daum.maps.services.Status.OK) {
+            var coords = new daum.maps.LatLng(status.addr[0].lat, status.addr[0].lng);
+            // 결과값으로 받은 위치를 마커로 표시합니다
+            var marker = new daum.maps.Marker({
+                map: map,
+                position: coords
+            });
+            // 인포윈도우로 장소에 대한 설명을 표시합니다
+            var infowindow = new daum.maps.InfoWindow({
+                content: '<div style="width:150px;text-align:center;padding:6px 0;">#{competition.title}</div>'
+            });
+            infowindow.open(map, marker);
+            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+            map.setCenter(coords);
+          } 
+        });    
+          hr
+    if competition.numAnswers > 0
+      hr
+      h3 #{competition.numAnswers} Answer(s)
+      .answers.show
+        each answer in answers
+          include _answer
+    hr
+    if currentUser
+      form(action=`/competitions/${competition.id}/answers`, method='POST')
+        .form-group
+          label(for='answer') 궁금한것은 댓글로 적어주세요!
+          textarea.form-control(name="content", rows="5")
+        button.btn.btn-primary(type="submit") 댓글 등록하기
+
+  script(src='/javascripts/competition_client.js')
