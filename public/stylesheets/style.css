@@ -53,6 +53,14 @@ a:hover {
     left: 0.5em;
     color: #bababa;
     position: absolute; }
+  
+.main-search-input-group {
+  margin: 1em 0;
+  width: 110%;
+  position: relative; }
+  .main-search-input-group input {
+    padding-left: 2.5em;
+    width: 80% !important; }
 
 .form-signin {
   width: 300px;
@@ -148,4 +156,7 @@ a:hover {
     color: #bbb;
     cursor: default; }
 
+#competitiontitle {
+  font-size: 1.2em;
+  color: #abb1b4; }
 /*# sourceMappingURL=style.css.map */

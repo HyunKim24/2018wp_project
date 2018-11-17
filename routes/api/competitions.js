@@ -55,13 +55,13 @@ router.put('/:id', catchErrors(async (req, res, next) => {
 router.delete('/:id', catchErrors(async (req, res, next) => {
   const competition = await Competition.findById(req.params.id);
   if (!competition) {
-    return next({status: 404, msg: 'Not exist competition'});
+    return next({status: 404, msg: '등록된 공모전이 없습니다.'});
   }
   if (competition.author && competition.author._id != req.user._id) {
-    return next({status: 403, msg: 'Cannot update'});
+    return next({status: 403, msg: '업데이트 할수 없습니다.'});
   }
   await Competition.findOneAndRemove({_id: req.params.id});
-  res.json({msg: 'deleted'});
+  res.json({msg: '삭제되었습니다.'});
 }));
 
 

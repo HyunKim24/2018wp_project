@@ -65,7 +65,7 @@ module.exports = io => {
     const competition = await Competition.findById(req.params.id);
 
     if (!competition) {
-      req.flash('danger', 'Not exist competition');
+      req.flash('danger', '등록된 공모전이 없습니다.');
       return res.redirect('back');
     }
     competition.title = req.body.title;
@@ -73,13 +73,13 @@ module.exports = io => {
     competition.tags = req.body.tags.split(" ").map(e => e.trim());
 
     await competition.save();
-    req.flash('success', 'Successfully updated');
+    req.flash('success', '성공적으로 업데이트 되었습니다.');
     res.redirect('/competitions');
   }));
 
   router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
     await Competition.findOneAndRemove({_id: req.params.id});
-    req.flash('success', 'Successfully deleted');
+    req.flash('success', '성공적으로 삭제되었습니다.');
     res.redirect('/competitions');
   }));
 
@@ -94,7 +94,7 @@ module.exports = io => {
     fileFilter: (req, file, cb) => {
       var ext = mimetypes[file.mimetype];
       if (!ext) {
-        return cb(new Error('Only image files are allowed!'), false);
+        return cb(new Error('오직 이미지 파일만 등록 가능합니다.(jpg,gif,png)'), false);
       }
       cb(null, true);
     }
@@ -132,7 +132,7 @@ module.exports = io => {
     const competition = await Competition.findById(req.params.id);
 
     if (!competition) {
-      req.flash('danger', 'Not exist competition');
+      req.flash('danger', '등록된 공모전이 없습니다.');
       return res.redirect('back');
     }
 
@@ -149,7 +149,7 @@ module.exports = io => {
     io.to(competition.author.toString())
       .emit('answered', {url: url, competition: competition});
     console.log('SOCKET EMIT', competition.author.toString(), 'answered', {url: url, competition: competition})
-    req.flash('success', 'Successfully answered');
+    req.flash('success', '댓글이 성공적으로 등록되었습니다.');
     res.redirect(`/competitions/${req.params.id}`);
   }));
 

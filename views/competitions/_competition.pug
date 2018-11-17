@@ -15,4 +15,4 @@
       | 게시자 #{moment(competition.createdAt).format('YYYY-MM-DD')}
       if competition.author
         | 
-        | by #[a(href=`/users/${competition.author.id}`)= competition.author.name] 
+        | by #{competition.author.name} 

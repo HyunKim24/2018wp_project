@@ -9,14 +9,16 @@
         ul.navbar-nav.ml-auto
           li.nav-item
             a.nav-link(href="/competitions") 공모전 리스트
-          li#admin.nav-item
-            a.nav-link(href="/users") 회원 관리
+         
           if (!currentUser) 
             li.nav-item
               a.nav-link(href='/signin') 로그인
             li.nav-item
               a.nav-link(href='/users/new') 회원가입
           else
+            if(currentUser._id=='5bee945ecdff4e0b184ba0d3')
+              li.nav-item
+                a.nav-link(href="/users") 회원 관리
             li.nav-item
               a.nav-link(href=`/users/${currentUser._id}`) 나의 프로필 관리
             li.nav-item

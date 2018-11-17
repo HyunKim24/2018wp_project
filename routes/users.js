@@ -65,12 +65,12 @@ router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
 
   const user = await User.findById({_id: req.params.id});
   if (!user) {
-    req.flash('danger', 'Not exist user.');
+    req.flash('danger', '사용자가 존재하지 않습니다.');
     return res.redirect('back');
   }
 
   if (!await user.validatePassword(req.body.current_password)) {
-    req.flash('danger', 'Current password invalid.');
+    req.flash('danger', '현재 패스워드가 틀립니다.');
     return res.redirect('back');
   }
 
@@ -80,13 +80,13 @@ router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
     user.password = await user.generateHash(req.body.password);
   }
   await user.save();
-  req.flash('success', 'Updated successfully.');
+  req.flash('success', '업데이트 되었습니다.');
   res.redirect('/users');
 }));
 
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
   const user = await User.findOneAndRemove({_id: req.params.id});
-  req.flash('success', 'Deleted Successfully.');
+  req.flash('success', '삭제 되었습니다.');
   res.redirect('/users');
 }));
 
@@ -104,7 +104,7 @@ router.post('/', catchErrors(async (req, res, next) => {
   var user = await User.findOne({email: req.body.email});
   console.log('USER???', user);
   if (user) {
-    req.flash('danger', 'Email address already exists.');
+    req.flash('danger', '이메일 아이디가 이미 존재합니다.');
     return res.redirect('back');
   }
   user = new User({
