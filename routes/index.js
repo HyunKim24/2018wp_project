@@ -9,11 +9,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  const competitions = competition.find({}, function(err, competitions) {
+  const competition = competition.find({}, function(err, competitions) {
     if (err) {
       return next(err);
     }
-    res.render('index', {competitions: competitions});
+    res.render('index', {competitions: competition});
   });
 });
 
