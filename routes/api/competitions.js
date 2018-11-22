@@ -26,10 +26,18 @@ router.get('/:id', catchErrors(async (req, res, next) => {
 // Create
 router.post('', catchErrors(async (req, res, next) => {
   var competition = new Competition({
+
     title: req.body.title,
     author: req.user._id,
     content: req.body.content,
     tags: req.body.tags.map(e => e.trim()),
+    img : req.body.img,
+    sponsor : req.body.sponsor,
+    who : req.body.who,
+    date : req.body.date,
+    master : req.body.master,
+    call : req.body.call
+
   });
   await competition.save();
   res.json(competition)
@@ -46,7 +54,14 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   }
   competition.title = req.body.title;
   competition.content = req.body.content;
+  competition.author = req.body.author;
   competition.tags = req.body.tags;
+  competition.img = req.body.img;
+  competition.sponsor = req.body.sponsor;
+  competition.who = req.body.who;
+  competition.date = req.body.date;
+  competition.master = req.body.master;
+  competition.call = req.body.call;
   await competition.save();
   res.json(competition);
 }));

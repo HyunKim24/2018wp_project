@@ -70,7 +70,14 @@ module.exports = io => {
     }
     competition.title = req.body.title;
     competition.content = req.body.content;
+    competition.author= req.body.author;
     competition.tags = req.body.tags.split(" ").map(e => e.trim());
+    competition.img = req.body.img;
+    competition.sponsor= req.body.sponsor;
+    competition.who= req.body.who;
+    competition.date= req.body.date;
+    competition.master= req.body.master;
+    competition.call = req.body.call;
 
     await competition.save();
     req.flash('success', '성공적으로 업데이트 되었습니다.');
@@ -105,7 +112,7 @@ module.exports = io => {
         catchErrors(async (req, res, next) => {
     var competition = new Competition({
       title: req.body.title,
-      author: req.user._id,
+      author: req.user.author,
       content: req.body.content,
       call: req.body.call,
       tags: req.body.tags.split(" ").map(e => e.trim()),
@@ -113,6 +120,7 @@ module.exports = io => {
       who: req.body.who,
       date: req.body.date,
       master: req.body.master,
+
      
     });
     if (req.file) {
@@ -126,6 +134,34 @@ module.exports = io => {
     req.flash('success', '성공적으로 등록되었습니다.');
     res.redirect('/competitions');
   }));
+
+  router.post('/:id', needAuth, 
+        upload.single('img'), // img라는 필드를 req.file로 저장함.
+        catchErrors(async (req, res, next) => {
+    var competition = new Competition({
+      title: req.body.title,
+      author: req.user.author,
+      content: req.body.content,
+      call: req.body.call,
+      tags: req.body.tags.split(" ").map(e => e.trim()),
+      sponsor: req.body.sponsor,
+      who: req.body.who,
+      date: req.body.date,
+      master: req.body.master,
+
+     
+    });
+    if (req.file) {
+      const dest = path.join(__dirname, '../public/images/uploads/');  // 옮길 디렉토리
+      console.log("File ->", req.file); // multer의 output이 어떤 형태인지 보자.
+      const filename = competition.id + "/" + req.file.originalname;
+      await fs.move(req.file.path, dest + filename);
+      competition.img = "/images/uploads/" + filename;
+    }
+    await competition.save();
+    req.flash('success', '성공적으로 등록되었습니다.');
+    res.redirect('/competitions');
+  }))
 
   router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
     const user = req.user;
