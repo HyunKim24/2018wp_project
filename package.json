@@ -28,5 +28,9 @@
     "pug": "2.0.0-beta11",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.1.1"
+  },
+
+  "engines": {
+    "node":"8.12.0"
   }
 }

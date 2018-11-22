@@ -14,7 +14,7 @@ block content
           button.btn.btn-primary.competition-like-btn(data-id=competition.id) 
             span.for-loading #[i.fa.fa-spin.fa-refresh] Loading
             span #[i.fa.fa-thumbs-up] 추천
-          if competition.author && competition.author.id == currentUser.id
+          if competition.author && competition.author.id == currentUser.id || currentUser.id =='5bee945ecdff4e0b184ba0d3'
             | 
             a.btn.btn-outline-secondary(href=`/competitions/${competition.id}/edit`) 편집
             | 

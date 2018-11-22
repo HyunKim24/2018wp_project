@@ -9,13 +9,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-  competition.find({}, function(err, competitions) {
+  const competitions = competition.find({}, function(err, competitions) {
     if (err) {
       return next(err);
     }
     res.render('index', {competitions: competitions});
   });
 });
-
 
 module.exports = router;
