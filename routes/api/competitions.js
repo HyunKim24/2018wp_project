@@ -54,7 +54,7 @@ router.put('/:id', catchErrors(async (req, res, next) => {
   }
   competition.title = req.body.title;
   competition.content = req.body.content;
-  competition.author = req.body.author;
+  competition.author = req.user._id;
   competition.tags = req.body.tags;
   competition.img = req.body.img;
   competition.sponsor = req.body.sponsor;

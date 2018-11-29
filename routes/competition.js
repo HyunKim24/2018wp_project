@@ -182,11 +182,11 @@ module.exports = io => {
     await competition.save();
 
     const url = `/competitions/${competition._id}#${answer._id}`;
-    io.to(competition.author.toString())
-      .emit('answered', {url: url, competition: competition});
-    console.log('SOCKET EMIT', competition.author.toString(), 'answered', {url: url, competition: competition})
+    // io.to(competition.author.toString())
+    //   .emit('answered', {url: url, competition: competition});
+    // console.log('SOCKET EMIT', competition.author.toString(), 'answered', {url: url, competition: competition})
     req.flash('success', '댓글이 성공적으로 등록되었습니다.');
-    res.redirect(`/competitions/${req.params.id}`);
+    res.redirect(`/competitions/${competition._id}`);
   }));
 
   return router;
