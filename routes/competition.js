@@ -158,7 +158,7 @@ module.exports = io => {
     //   competition.img = "/images/uploads/" + filename;
     // }
     await competition.save();
-    req.flash('success', '성공적으로 등록되었습니다.');
+    req.flash('success', '성공적으로 수정되었습니다.');
     res.redirect('/competitions');
   }));
 
