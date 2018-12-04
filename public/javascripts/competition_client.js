@@ -36,6 +36,7 @@ $(function() {
         $el.addClass('disabled');
       },
       error: function(data, status) {
+        //
         if (data.status == 401) {
           alert('Login required!');
           location = '/signin';

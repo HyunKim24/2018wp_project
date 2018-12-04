@@ -70,7 +70,7 @@ module.exports = io => {
     }
     competition.title = req.body.title;
     competition.content = req.body.content;
-    competition.author= req.body.author;
+    competition.author= req.user._id;
     competition.tags = req.body.tags.split(" ").map(e => e.trim());
     competition.img = req.body.img;
     competition.sponsor= req.body.sponsor;
@@ -112,16 +112,14 @@ module.exports = io => {
         catchErrors(async (req, res, next) => {
     var competition = new Competition({
       title: req.body.title,
-      author: req.user.author,
+      author: req.user._id,
       content: req.body.content,
       call: req.body.call,
       tags: req.body.tags.split(" ").map(e => e.trim()),
       sponsor: req.body.sponsor,
       who: req.body.who,
       date: req.body.date,
-      master: req.body.master,
-
-     
+      master: req.body.master
     });
     if (req.file) {
       const dest = path.join(__dirname, '../public/images/uploads/');  // 옮길 디렉토리
@@ -135,33 +133,34 @@ module.exports = io => {
     res.redirect('/competitions');
   }));
 
-  router.post('/:id', needAuth, 
-        upload.single('img'), // img라는 필드를 req.file로 저장함.
-        catchErrors(async (req, res, next) => {
-    var competition = new Competition({
-      title: req.body.title,
-      author: req.user.author,
-      content: req.body.content,
-      call: req.body.call,
-      tags: req.body.tags.split(" ").map(e => e.trim()),
-      sponsor: req.body.sponsor,
-      who: req.body.who,
-      date: req.body.date,
-      master: req.body.master,
+  router.post('/:id', catchErrors(async (req, res, next) => {
+    const competition = await Competition.findById(req.params.id);
 
-     
-    });
-    if (req.file) {
-      const dest = path.join(__dirname, '../public/images/uploads/');  // 옮길 디렉토리
-      console.log("File ->", req.file); // multer의 output이 어떤 형태인지 보자.
-      const filename = competition.id + "/" + req.file.originalname;
-      await fs.move(req.file.path, dest + filename);
-      competition.img = "/images/uploads/" + filename;
+    if (!competition) {
+      req.flash('danger', 'Not exist question');
+      return res.redirect('back');
     }
+    competition.title= req.body.title;
+    // competition.author= req.user._id,
+    competition.content= req.body.content;
+    competition.call= req.body.call;
+    competition.tags= req.body.tags.split(" ").map(e => e.trim());
+    competition.sponsor= req.body.sponsor;
+    competition.who= req.body.who;
+    competition.date= req.body.date;
+    competition.master=req.body.master;
+
+    // if (req.file) {
+    //   const dest = path.join(__dirname, '../public/images/uploads/');  // 옮길 디렉토리
+    //   console.log("File ->", req.file); // multer의 output이 어떤 형태인지 보자.
+    //   const filename = competition.id + "/" + req.file.originalname;
+    //   await fs.move(req.file.path, dest + filename);
+    //   competition.img = "/images/uploads/" + filename;
+    // }
     await competition.save();
     req.flash('success', '성공적으로 등록되었습니다.');
     res.redirect('/competitions');
-  }))
+  }));
 
   router.post('/:id/answers', needAuth, catchErrors(async (req, res, next) => {
     const user = req.user;

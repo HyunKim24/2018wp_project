@@ -38,6 +38,7 @@ router.post('/answers/:id/like', catchErrors(async (req, res, next) => {
   const answer = await Answer.findById(req.params.id);
   answer.numLikes++;
   await answer.save();
+  //answer 오브젝트를 그냥 리턴함
   return res.json(answer);
 }));
 
