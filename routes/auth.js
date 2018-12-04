@@ -18,7 +18,7 @@ module.exports = (app, passport) => {
       failureRedirect : '/signin',
       failureFlash : true // allow flash messages
     }), (req, res, next) => {
-      req.flash('success', '오늘도 열심히 사는 당신 힘내세요!');
+      req.flash('success', '로그인 되었습니다. 오늘도 열심히 사는 당신 힘내세요!');
       res.redirect('/');
     }
   );
