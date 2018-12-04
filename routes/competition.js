@@ -150,13 +150,13 @@ module.exports = io => {
     competition.date= req.body.date;
     competition.master=req.body.master;
 
-    // if (req.file) {
-    //   const dest = path.join(__dirname, '../public/images/uploads/');  // 옮길 디렉토리
-    //   console.log("File ->", req.file); // multer의 output이 어떤 형태인지 보자.
-    //   const filename = competition.id + "/" + req.file.originalname;
-    //   await fs.move(req.file.path, dest + filename);
-    //   competition.img = "/images/uploads/" + filename;
-    // }
+    if (req.file) {
+      const dest = path.join(__dirname, '../public/images/uploads/');  // 옮길 디렉토리
+      console.log("File ->", req.file); // multer의 output이 어떤 형태인지 보자.
+      const filename = competition.id + "/" + req.file.originalname;
+      await fs.move(req.file.path, dest + filename);
+      competition.img = "/images/uploads/" + filename;
+    }
     await competition.save();
     req.flash('success', '성공적으로 수정되었습니다.');
     res.redirect('/competitions');
