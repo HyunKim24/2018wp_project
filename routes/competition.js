@@ -135,7 +135,7 @@ module.exports = io => {
     }
     await competition.save();
     req.flash('success', '성공적으로 등록되었습니다.');
-    res.redirect('/competitions');
+    res.redirect('/competitions'); 
   }));
 
   router.post('/:id', catchErrors(async (req, res, next) => {
