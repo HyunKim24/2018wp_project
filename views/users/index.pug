@@ -3,7 +3,11 @@ extends ../layout
 block content
   .container
     h1.main-title 회원관리
-    
+
+     form.form-inline.main-search-input-group(action='/users', method='GET')
+      input.form-control.mr-sm-2(type='text', name='term', placeholder='찾고자 하는 회원을 검색하세요', aria-label='Search', value=term)
+      button#search-home.btn.btn-primary(type='submit') 회원 검색
+
     table.table.table-hover
       thead
         tr

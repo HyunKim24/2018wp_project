@@ -5,16 +5,13 @@ var competition = require('../models/competition');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
-});
-
-router.get('/', function(req, res, next) {
-  const competition = competition.find({}, function(err, competitions) {
-    if (err) {
+  competition.find({},function(err,competitions){
+    if(err){
       return next(err);
     }
-    res.render('index', {competitions: competition});
+  res.render('index',{competitions:competitions});
   });
 });
+
 
 module.exports = router;

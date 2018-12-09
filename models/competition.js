@@ -13,6 +13,7 @@ var schema = new Schema({
   master: {type: String, trim: true, required: true},
   call: {type: String, trim: true, required: true},
   numLikes: {type: Number, default: 0},
+  numdisLikes: {type: Number, default: 0},
   numAnswers: {type: Number, default: 0},
   numReads: {type: Number, default: 0},
   img: {type: String},  // 이미지의 path를 저장하기 위해 추가

@@ -9,7 +9,7 @@
   input.form-control(type="text", name="tags", placeholder="스페이스바로 띄어가며 단어를 입력하세요", value=competition.tags ? competition.tags.join(" ") : "")
 .form-group
   label(for='img') 공모전 요강 포스터
-  input.form-control(type="file", name="img")
+  input.form-control(type="file", name="img",placeholder="jpg png gif만 등록 가능")
 .form-group
   label(for="sponsor") 공모전 주최 기관
   input.form-control(type="text", name="sponsor", placeholder="공모전 주최기관", value=competition.sponsor)

@@ -1,4 +1,3 @@
-.content= competition.content
 .tags.badges
   each tag in competition.tags
     span.badge.badge-phill.badge-secondary= tag
@@ -8,6 +7,7 @@
   .col-sm
     .numbers.
       #[span.number.num-likes= competition.numLikes] 추천,
+      #[span.number.num-dislikes= competition.numdisLikes] 싫어요,
       #[span.number.num-answers= competition.numAnswers] 댓글,
       #[span.number.num-reads= competition.numReads] 조회 수
   .col-sm

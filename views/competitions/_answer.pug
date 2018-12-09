@@ -8,13 +8,21 @@
         | 
         | Like
 
+    .number
+      span.number.num-dislikes= answer.numdisLikes
+    .button
+      a.like.answer-dislike-btn(href='#', data-id=answer.id)
+        i.fa.fa-thumbs-down
+        | 
+        | disLike
+
   .card-body
     .content= answer.content
   .row.card-body
     .col-sm
     .col-sm.text-right
       .author
-        | answered on #{moment(answer.createdAt).format('YYYY-MM-DD')}
+        | 댓글 게시자 #{moment(answer.createdAt).format('YYYY-MM-DD')}
         if answer.author
           | 
           | by #{answer.author.name}

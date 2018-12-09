@@ -41,15 +41,26 @@ function validateForm(form, options) {
   return null;
 }
 
-/* GET users listing. */
-router.get('/', needAuth, catchErrors(async (req, res, next) => {
-  const users = await User.find({});
-  res.render('users/index', {users: users});
+router.get('/', catchErrors(async (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  var query = {};
+  const term = req.query.term;
+  if (term) {
+    query = {$or: [
+      {name: {'$regex': term, '$options': 'i'}},
+      {email: {'$regex': term, '$options': 'i'}},
+    ]};
+  }
+  const users = await User.find(query, {});
+  res.render('users/index', {users: users, term: term, query: req.query});
 }));
 
 router.get('/new', (req, res, next) => {
   res.render('users/new', {messages: req.flash()});
 });
+
 
 router.get('/:id/edit', needAuth, catchErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
@@ -81,13 +92,13 @@ router.put('/:id', needAuth, catchErrors(async (req, res, next) => {
   }
   await user.save();
   req.flash('success', '업데이트 되었습니다.');
-  res.redirect('/users');
+  res.redirect('/');
 }));
 
 router.delete('/:id', needAuth, catchErrors(async (req, res, next) => {
   const user = await User.findOneAndRemove({_id: req.params.id});
   req.flash('success', '삭제 되었습니다.');
-  res.redirect('/users');
+  res.redirect('/');
 }));
 
 router.get('/:id', catchErrors(async (req, res, next) => {

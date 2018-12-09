@@ -32,7 +32,11 @@ module.exports = io => {
     if (term) {
       query = {$or: [
         {title: {'$regex': term, '$options': 'i'}},
-        {content: {'$regex': term, '$options': 'i'}}
+        {content: {'$regex': term, '$options': 'i'}}, 
+        {sponsor: {'$regex': term, '$options': 'i'}},
+        {who: {'$regex': term, '$options': 'i'}},
+        {tags: {'$regex': term, '$options': 'i'}},
+        {date: {'$regex': term, '$options': 'i'}}
       ]};
     }
     const competitions = await Competition.paginate(query, {
@@ -94,7 +98,8 @@ module.exports = io => {
   const mimetypes = {
     "image/jpeg": "jpg",
     "image/gif": "gif",
-    "image/png": "png"
+    "image/png": "png",
+    "image/pdf": "pdf"
   };
   const upload = multer({
     dest: 'tmp', 
@@ -141,7 +146,7 @@ module.exports = io => {
       return res.redirect('back');
     }
     competition.title= req.body.title;
-    // competition.author= req.user._id,
+    competition.author= req.user._id,
     competition.content= req.body.content;
     competition.call= req.body.call;
     competition.tags= req.body.tags.split(" ").map(e => e.trim());
@@ -181,9 +186,9 @@ module.exports = io => {
     await competition.save();
 
     const url = `/competitions/${competition._id}#${answer._id}`;
-    // io.to(competition.author.toString())
-    //   .emit('answered', {url: url, competition: competition});
-    // console.log('SOCKET EMIT', competition.author.toString(), 'answered', {url: url, competition: competition})
+    io.to(competition.author.toString())
+      .emit('answered', {url: url, competition: competition});
+    console.log('SOCKET EMIT', competition.author.toString(), 'answered', {url: url, competition: competition})
     req.flash('success', '댓글이 성공적으로 등록되었습니다.');
     res.redirect(`/competitions/${competition._id}`);
   }));

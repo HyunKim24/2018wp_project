@@ -19,8 +19,7 @@ block content
 
     hr
     p
-      //- a.btn.btn-outline-secondary(href='/users/') 회원리스트
       | 
-      a.btn.btn-outline-primary(href=`/users/${user._id}/edit`) 편집
+      a.btn.btn-outline-primary(href=`/users/${user._id}/edit`) 회원정보수정
       | 
-      a.btn.btn-outline-danger.need-confirm-btn(href=`/users/${user._id}?_method=DELETE`) 삭제
+      a.btn.btn-outline-danger.need-confirm-btn(href=`/users/${user._id}?_method=DELETE`) 탈퇴

@@ -141,18 +141,18 @@ a:hover {
     margin-bottom: 0.5em;
     color: #888; }
 
-.competition-like-btn, .answer-like-btn {
+.competition-like-btn, .competition-dislike-btn, .answer-like-btn, .answer-dislike-btn{
   cursor: pointer; }
-  .competition-like-btn .for-loading, .answer-like-btn .for-loading {
+  .competition-like-btn .for-loading, .competition-dislike-btn .for-loading, .answer-like-btn .for-loading, .answer-dislike-btn .for-loading {
     display: none; }
-  .competition-like-btn.loading, .answer-like-btn.loading {
+  .competition-like-btn.loading, .competition-dislike-btn.loading, .answer-like-btn.loading, .answer-dislike-btn.loading{
     filter: opacity(30%);
     cursor: wait; }
-    .competition-like-btn.loading > span, .answer-like-btn.loading > span {
+    .competition-like-btn.loading > span, .competition-dislike-btn.loading > span, .answer-like-btn.loading > span, .answer-dislike-btn.loading > span{
       display: none; }
-    .competition-like-btn.loading .for-loading, .answer-like-btn.loading .for-loading {
+    .competition-like-btn.loading .for-loading, .competition-dislike-btn.loading .for-loading, .answer-like-btn.loading .for-loading,.answer-dislike-btn.loading .for-loading {
       display: inline-block; }
-  .competition-like-btn.disabled, .answer-like-btn.disabled {
+  .competition-like-btn.disabled, .competition-dislike-btn.disabled, .answer-like-btn.disabled, .answer-dislike-btn.disabled {
     color: #bbb;
     cursor: default; }
 

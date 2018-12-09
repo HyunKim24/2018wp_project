@@ -8,6 +8,22 @@ block content
   .container
     
     form.form-inline.main-search-input-group(action='/competitions', method='GET')
-      input.form-control.mr-sm-2(type='text', name='term', placeholder='빠르게 공모전을 검색하세요', aria-label='Search', value=term)
+      input.form-control.mr-sm-2(type='text', name='term', placeholder='찾고자 하는 공모전을 검색하세요', aria-label='Search', value=term)
       button#search-home.btn.btn-primary(type='submit') 공모전 검색
-  br
+    br
+    h3 추천 공모전
+    .row
+      each competition in competitions
+       col-lg-8.col-sm-4.portfolio-item
+          .card.border-warning.mb-3(style='max-width: 18rem;')
+            .card-header 
+              a.title(href=`/competitions/${competition.id}`  style="color: black")= competition.title           
+            .card-body
+              p 응시 - #{competition.who}
+              p 주최 - #{competition.sponsor}
+          
+              hr
+              each tag in competition.tags
+                span.badge.badge-phill.badge-secondary= tag
+              hr
+              a.btn.btn-primary(href=`/competitions/${competition.id}` role="button") 상세보기
